@@ -83,6 +83,7 @@ const translations = {
         heroTitle: 'Your Journey to Fitness & Beauty Starts Here!',
         heroSubtitle: 'At Lovers Diet Center, we don\'t just provide meals – we design a complete healthy lifestyle for you. We provide everything your body needs to reach your ideal weight and glow with radiant skin.',
         bookConsultation: 'Book Consultation',
+        startJourney: 'Start Your Journey Now',
         viewProducts: 'View Products',
 
         // About Section
@@ -219,6 +220,7 @@ const translations = {
         heroTitle: 'رحلتك للرشاقة والجمال تبدأ في مكان واحد! 🌟',
         heroSubtitle: 'في Lovers Diet Center، نحن لا نقدم مجرد وجبات، بل نصمم لك نمط حياة صحي متكامل. نوفر لك كل ما يحتاجه جسمك لتصل للوزن المثالي وتتألق ببشرة نضرة.',
         bookConsultation: 'احجز استشارة',
+        startJourney: 'ابدأ رحلتك الآن',
         viewProducts: 'تصفح المنتجات',
 
         // About Section

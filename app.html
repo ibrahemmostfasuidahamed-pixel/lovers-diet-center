@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lovers Diet Center | رحلتك للرشاقة والجمال</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="images/logo.png">
+    <style>
+        /* ===== CSS VARIABLES ===== */
+        :root {
+            --primary-orange: #f59e0b;
+            --primary-orange-dark: #d97706;
+            --accent-green: #10b981;
+            --dark-brown: #78350f;
+            --text-dark: #1f2937;
+            --text-muted: #6b7280;
+            --text-light: #9ca3af;
+            --bg-light: #f9fafb;
+            --border-color: #e5e7eb;
+            --white: #ffffff;
+            --gradient-orange: linear-gradient(135deg, #f59e0b, #ea580c);
+            --gradient-hero: linear-gradient(135deg, #fef3c7 0%, #fce7f3 50%, #dbeafe 100%);
+            --glass-bg: rgba(255, 255, 255, 0.8);
+            --glass-border: rgba(255, 255, 255, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: var(--gradient-hero);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* ===== LOADING SCREEN ===== */
+        .loading-screen {
+            position: fixed;
+            inset: 0;
+            background: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+
+        .loading-screen.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loading-content {
+            text-align: center;
+        }
+
+        .loading-logo {
+            width: 120px;
+            height: 120px;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            margin: 30px auto;
+            border: 4px solid var(--border-color);
+            border-top-color: var(--primary-orange);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        .loading-text {
+            font-size: 18px;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        /* ===== QUIZ CONTAINER ===== */
+        .quiz-container {
+            position: fixed;
+            inset: 0;
+            background: var(--gradient-hero);
+            z-index: 1000;
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s ease;
+        }
+
+        .quiz-container.slide-out {
+            transform: translateX(100%);
+            opacity: 0;
+        }
+
+        .quiz-container.hidden {
+            display: none;
+        }
+
+        /* Progress Bar */
+        .quiz-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: rgba(0, 0, 0, 0.1);
+            z-index: 1001;
+        }
+
+        .quiz-progress-bar {
+            height: 100%;
+            background: var(--gradient-orange);
+            transition: width 0.4s ease;
+            width: 0%;
+        }
+
+        .quiz-step-indicator {
+            position: fixed;
+            top: 15px;
+            right: 20px;
+            background: var(--white);
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-dark);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            z-index: 1001;
+        }
+
+        /* Quiz Content */
+        .quiz-wrapper {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .quiz-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 30px;
+            padding: 50px;
+            max-width: 600px;
+            width: 100%;
+            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.1);
+        }
+
+        .quiz-step {
+            display: none;
+            animation: fadeInUp 0.5s ease;
+        }
+
+        .quiz-step.active {
+            display: block;
+        }
+
+        .quiz-logo {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .quiz-logo img {
+            width: 70px;
+            height: 70px;
+        }
+
+        .quiz-title {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--dark-brown);
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .quiz-question {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--text-dark);
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .quiz-subtitle {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 15px;
+            margin-top: -25px;
+            margin-bottom: 30px;
+        }
+
+        /* Option Cards */
+        .options-grid {
+            display: grid;
+            gap: 15px;
+        }
+
+        .options-grid.two-cols {
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .option-card {
+            background: var(--white);
+            border: 3px solid var(--border-color);
+            border-radius: 16px;
+            padding: 25px 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .option-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--primary-orange);
+            box-shadow: 0 10px 30px rgba(245, 158, 11, 0.2);
+        }
+
+        .option-card.selected {
+            border-color: var(--primary-orange);
+            background: linear-gradient(135deg, #fef3c7, #fed7aa);
+        }
+
+        .option-card.gender-card {
+            flex-direction: column;
+            text-align: center;
+            padding: 30px;
+        }
+
+        .option-icon {
+            font-size: 40px;
+        }
+
+        .option-img {
+            width: 100px;
+            height: 130px;
+            object-fit: cover;
+            border-radius: 12px;
+        }
+
+        .option-text {
+            font-size: 17px;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        .option-desc {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-top: 5px;
+        }
+
+        /* Buttons */
+        .btn-back {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: var(--white);
+            border: 2px solid var(--border-color);
+            color: var(--text-dark);
+            padding: 10px 20px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: inherit;
+            z-index: 1002;
+            transition: all 0.3s ease;
+        }
+
+        .btn-back:hover {
+            border-color: var(--primary-orange);
+            background: var(--bg-light);
+        }
+
+        .btn-continue {
+            width: 100%;
+            background: var(--gradient-orange);
+            color: var(--white);
+            border: none;
+            padding: 18px;
+            border-radius: 14px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: inherit;
+            margin-top: 25px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-continue:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(245, 158, 11, 0.4);
+        }
+
+        .btn-continue:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Form */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 8px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            font-size: 16px;
+            font-family: inherit;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--primary-orange);
+            box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.1);
+        }
+
+        /* ===== TRANSITION OVERLAY ===== */
+        .transition-overlay {
+            position: fixed;
+            inset: 0;
+            background: var(--gradient-hero);
+            z-index: 2000;
+            display: none;
+            opacity: 0;
+        }
+
+        .transition-overlay.active {
+            display: flex;
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        .transition-content {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 50px;
+        }
+
+        .transition-text {
+            flex: 1;
+            padding-left: 50px;
+        }
+
+        .transition-greeting {
+            font-size: 20px;
+            color: var(--primary-orange);
+            font-weight: 600;
+            margin-bottom: 10px;
+            animation: fadeInUp 0.6s ease 0.3s both;
+        }
+
+        .transition-name {
+            font-size: 48px;
+            font-weight: 800;
+            color: var(--text-dark);
+            margin-bottom: 20px;
+            animation: fadeInUp 0.6s ease 0.5s both;
+        }
+
+        .transition-goal-label {
+            font-size: 16px;
+            color: var(--text-muted);
+            animation: fadeInUp 0.6s ease 0.7s both;
+        }
+
+        .transition-goal {
+            font-size: 36px;
+            font-weight: 700;
+            background: var(--gradient-orange);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 30px;
+            animation: fadeInUp 0.6s ease 0.9s both;
+        }
+
+        .transition-message {
+            font-size: 18px;
+            color: var(--text-dark);
+            font-weight: 500;
+            animation: fadeInUp 0.6s ease 1.1s both;
+        }
+
+        .transition-body {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: slideInRight 1s ease 0.5s both;
+        }
+
+        .body-image {
+            max-width: 350px;
+            max-height: 450px;
+            border-radius: 30px;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.2);
+            animation: breathe 3s ease-in-out infinite;
+        }
+
+        /* ===== MAIN WEBSITE ===== */
+        .main-website {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .main-website.visible {
+            display: block;
+            opacity: 1;
+        }
+
+        /* ===== KEYFRAMES ===== */
+        @keyframes pulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.1);
+            }
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(100px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes breathe {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.02);
+            }
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .quiz-card {
+                padding: 30px 20px;
+            }
+
+            .quiz-title {
+                font-size: 22px;
+            }
+
+            .quiz-question {
+                font-size: 18px;
+            }
+
+            .options-grid.two-cols {
+                grid-template-columns: 1fr;
+            }
+
+            .transition-content {
+                flex-direction: column;
+                text-align: center;
+                padding: 30px;
+            }
+
+            .transition-text {
+                padding: 0;
+                order: 2;
+            }
+
+            .transition-body {
+                order: 1;
+                margin-bottom: 30px;
+            }
+
+            .transition-name {
+                font-size: 32px;
+            }
+
+            .transition-goal {
+                font-size: 26px;
+            }
+
+            .body-image {
+                max-width: 200px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-content">
+            <img src="images/logo.png" alt="Lovers Diet Center" class="loading-logo">
+            <div class="loading-spinner"></div>
+            <p class="loading-text">جاري التحميل...</p>
+        </div>
+    </div>
+
+    <!-- Quiz Container -->
+    <div class="quiz-container" id="quizContainer">
+        <!-- Progress -->
+        <div class="quiz-progress">
+            <div class="quiz-progress-bar" id="progressBar"></div>
+        </div>
+        <div class="quiz-step-indicator" id="stepIndicator">1 / 6</div>
+        <button class="btn-back" id="btnBack" style="display: none;">← رجوع</button>
+
+        <div class="quiz-wrapper">
+            <div class="quiz-card">
+                <!-- Step 1: Gender -->
+                <div class="quiz-step active" data-step="1">
+                    <div class="quiz-logo">
+                        <img src="images/logo.png" alt="Logo">
+                    </div>
+                    <h1 class="quiz-title">رحلتك الصحية تبدأ هنا</h1>
+                    <h2 class="quiz-question">اختر جنسك</h2>
+                    <div class="options-grid two-cols">
+                        <div class="option-card gender-card" data-value="male" data-field="gender">
+                            <img src="images/male-fitness.png" alt="رجل" class="option-img">
+                            <span class="option-text">رجل</span>
+                        </div>
+                        <div class="option-card gender-card" data-value="female" data-field="gender">
+                            <img src="images/female-fitness.png" alt="امرأة" class="option-img">
+                            <span class="option-text">امرأة</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 2: Age -->
+                <div class="quiz-step" data-step="2">
+                    <h2 class="quiz-question">ما هو عمرك؟</h2>
+                    <div class="options-grid">
+                        <div class="option-card" data-value="18-25" data-field="age">
+                            <span class="option-icon">🎓</span>
+                            <span class="option-text">18 - 25 سنة</span>
+                        </div>
+                        <div class="option-card" data-value="26-35" data-field="age">
+                            <span class="option-icon">💼</span>
+                            <span class="option-text">26 - 35 سنة</span>
+                        </div>
+                        <div class="option-card" data-value="36-45" data-field="age">
+                            <span class="option-icon">🏠</span>
+                            <span class="option-text">36 - 45 سنة</span>
+                        </div>
+                        <div class="option-card" data-value="46+" data-field="age">
+                            <span class="option-icon">⭐</span>
+                            <span class="option-text">46+ سنة</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 3: Goal -->
+                <div class="quiz-step" data-step="3">
+                    <h2 class="quiz-question">ما هو هدفك الرئيسي؟</h2>
+                    <div class="options-grid">
+                        <div class="option-card" data-value="weight-loss" data-field="goal">
+                            <span class="option-icon">🎯</span>
+                            <div>
+                                <span class="option-text">خسارة الوزن</span>
+                                <p class="option-desc">تخلص من الوزن الزائد</p>
+                            </div>
+                        </div>
+                        <div class="option-card" data-value="muscle-gain" data-field="goal">
+                            <span class="option-icon">💪</span>
+                            <div>
+                                <span class="option-text">بناء العضلات</span>
+                                <p class="option-desc">زيادة الكتلة العضلية</p>
+                            </div>
+                        </div>
+                        <div class="option-card" data-value="weight-gain" data-field="goal">
+                            <span class="option-icon">📈</span>
+                            <div>
+                                <span class="option-text">زيادة الوزن</span>
+                                <p class="option-desc">اكتسب وزناً صحياً</p>
+                            </div>
+                        </div>
+                        <div class="option-card" data-value="lifestyle" data-field="goal">
+                            <span class="option-icon">🌿</span>
+                            <div>
+                                <span class="option-text">تحسين نمط الحياة</span>
+                                <p class="option-desc">عش حياة أكثر صحة</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 4: Motivation -->
+                <div class="quiz-step" data-step="4">
+                    <h2 class="quiz-question">ما الذي يحفزك أكثر؟</h2>
+                    <div class="options-grid">
+                        <div class="option-card" data-value="health" data-field="motivation">
+                            <span class="option-icon">❤️</span>
+                            <span class="option-text">تحسين صحتي</span>
+                        </div>
+                        <div class="option-card" data-value="appearance" data-field="motivation">
+                            <span class="option-icon">✨</span>
+                            <span class="option-text">مظهري الخارجي</span>
+                        </div>
+                        <div class="option-card" data-value="energy" data-field="motivation">
+                            <span class="option-icon">⚡</span>
+                            <span class="option-text">زيادة طاقتي</span>
+                        </div>
+                        <div class="option-card" data-value="confidence" data-field="motivation">
+                            <span class="option-icon">👑</span>
+                            <span class="option-text">ثقتي بنفسي</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 5: Challenge -->
+                <div class="quiz-step" data-step="5">
+                    <h2 class="quiz-question">ما أكبر تحدي تواجهه؟</h2>
+                    <div class="options-grid">
+                        <div class="option-card" data-value="food" data-field="challenge">
+                            <span class="option-icon">🍔</span>
+                            <span class="option-text">التحكم في الطعام</span>
+                        </div>
+                        <div class="option-card" data-value="discipline" data-field="challenge">
+                            <span class="option-icon">📅</span>
+                            <span class="option-text">الالتزام والانضباط</span>
+                        </div>
+                        <div class="option-card" data-value="time" data-field="challenge">
+                            <span class="option-icon">⏰</span>
+                            <span class="option-text">ضيق الوقت</span>
+                        </div>
+                        <div class="option-card" data-value="knowledge" data-field="challenge">
+                            <span class="option-icon">📚</span>
+                            <span class="option-text">لا أعرف من أين أبدأ</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 6: Contact -->
+                <div class="quiz-step" data-step="6">
+                    <h2 class="quiz-question">آخر خطوة! 🎉</h2>
+                    <p class="quiz-subtitle">أدخل بياناتك لنخصص لك أفضل خطة</p>
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label>الاسم الكامل *</label>
+                            <input type="text" id="userName" required placeholder="أدخل اسمك">
+                        </div>
+                        <div class="form-group">
+                            <label>رقم الواتساب *</label>
+                            <input type="tel" id="userPhone" required placeholder="05xxxxxxxx">
+                        </div>
+                        <button type="submit" class="btn-continue">🚀 ابدأ رحلتك الآن</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Transition Overlay -->
+    <div class="transition-overlay" id="transitionOverlay">
+        <div class="transition-content">
+            <div class="transition-text">
+                <p class="transition-greeting">🎉 أهلاً بك</p>
+                <h1 class="transition-name" id="transitionName">مرحباً!</h1>
+                <p class="transition-goal-label">هدفك:</p>
+                <h2 class="transition-goal" id="transitionGoal">خسارة الوزن</h2>
+                <p class="transition-message">نحن هنا لمساعدتك في تحقيق أهدافك! 💪</p>
+            </div>
+            <div class="transition-body">
+                <img src="images/goal-weight-loss.png" alt="هدفك" class="body-image" id="transitionImage">
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Website (will load dynamically) -->
+    <div class="main-website" id="mainWebsite"></div>
+
+    <script>
+        // ===== QUIZ DATA =====
+        const quizData = {
+            gender: '',
+            age: '',
+            goal: '',
+            motivation: '',
+            challenge: '',
+            name: '',
+            phone: ''
+        };
+
+        let currentStep = 1;
+        const totalSteps = 6;
+
+        // ===== GOAL LABELS =====
+        const goalLabels = {
+            'weight-loss': 'خسارة الوزن',
+            'muscle-gain': 'بناء العضلات',
+            'weight-gain': 'زيادة الوزن',
+            'lifestyle': 'تحسين نمط الحياة'
+        };
+
+        const goalImages = {
+            'weight-loss': 'images/goal-weight-loss.png',
+            'muscle-gain': 'images/goal-muscle-gain.png',
+            'weight-gain': 'images/goal-muscle-gain.png',
+            'lifestyle': 'images/goal-health.png'
+        };
+
+        // ===== INIT =====
+        document.addEventListener('DOMContentLoaded', function () {
+            // Check if quiz already completed
+            const completed = localStorage.getItem('quizCompleted');
+            if (completed) {
+                hideLoading();
+                hideQuiz();
+                loadMainWebsite();
+            } else {
+                // Show quiz after loading
+                setTimeout(hideLoading, 1500);
+            }
+
+            // Setup event listeners
+            setupOptionCards();
+            setupForm();
+            setupBackButton();
+        });
+
+        // ===== LOADING =====
+        function hideLoading() {
+            document.getElementById('loadingScreen').classList.add('hidden');
+        }
+
+        // ===== PROGRESS =====
+        function updateProgress() {
+            const percent = (currentStep / totalSteps) * 100;
+            document.getElementById('progressBar').style.width = percent + '%';
+            document.getElementById('stepIndicator').textContent = currentStep + ' / ' + totalSteps;
+
+            // Show/hide back button
+            document.getElementById('btnBack').style.display = currentStep > 1 ? 'block' : 'none';
+        }
+
+        // ===== OPTION CARDS =====
+        function setupOptionCards() {
+            document.querySelectorAll('.option-card').forEach(card => {
+                card.addEventListener('click', function () {
+                    const field = this.dataset.field;
+                    const value = this.dataset.value;
+
+                    // Save data
+                    quizData[field] = value;
+
+                    // Visual feedback
+                    const container = this.closest('.quiz-step');
+                    container.querySelectorAll('.option-card').forEach(c => c.classList.remove('selected'));
+                    this.classList.add('selected');
+
+                    // Auto advance
+                    setTimeout(nextStep, 300);
+                });
+            });
+        }
+
+        // ===== NAVIGATION =====
+        function nextStep() {
+            if (currentStep >= totalSteps) return;
+
+            // Hide current
+            document.querySelector(`.quiz-step[data-step="${currentStep}"]`).classList.remove('active');
+
+            // Show next
+            currentStep++;
+            document.querySelector(`.quiz-step[data-step="${currentStep}"]`).classList.add('active');
+
+            updateProgress();
+        }
+
+        function prevStep() {
+            if (currentStep <= 1) return;
+
+            // Hide current
+            document.querySelector(`.quiz-step[data-step="${currentStep}"]`).classList.remove('active');
+
+            // Show prev
+            currentStep--;
+            document.querySelector(`.quiz-step[data-step="${currentStep}"]`).classList.add('active');
+
+            updateProgress();
+        }
+
+        function setupBackButton() {
+            document.getElementById('btnBack').addEventListener('click', prevStep);
+        }
+
+        // ===== FORM SUBMIT =====
+        function setupForm() {
+            document.getElementById('contactForm').addEventListener('submit', function (e) {
+                e.preventDefault();
+
+                quizData.name = document.getElementById('userName').value;
+                quizData.phone = document.getElementById('userPhone').value;
+
+                // Save to localStorage
+                localStorage.setItem('quizCompleted', 'true');
+                localStorage.setItem('quizData', JSON.stringify(quizData));
+
+                // Start transition
+                startTransition();
+            });
+        }
+
+        // ===== TRANSITION =====
+        function startTransition() {
+            // Slide out quiz
+            document.getElementById('quizContainer').classList.add('slide-out');
+
+            // Show transition overlay
+            setTimeout(() => {
+                document.getElementById('quizContainer').classList.add('hidden');
+
+                const overlay = document.getElementById('transitionOverlay');
+
+                // Update content
+                document.getElementById('transitionName').textContent = 'مرحباً ' + quizData.name + '!';
+                document.getElementById('transitionGoal').textContent = goalLabels[quizData.goal] || quizData.goal;
+                document.getElementById('transitionImage').src = goalImages[quizData.goal] || 'images/goal-weight-loss.png';
+
+                overlay.classList.add('active');
+
+                // After transition, load main website
+                setTimeout(loadMainWebsite, 4000);
+            }, 500);
+        }
+
+        // ===== MAIN WEBSITE =====
+        function hideQuiz() {
+            const quiz = document.getElementById('quizContainer');
+            quiz.classList.add('hidden');
+        }
+
+        function loadMainWebsite() {
+            // Hide transition
+            const transition = document.getElementById('transitionOverlay');
+            transition.style.opacity = '0';
+
+            setTimeout(() => {
+                transition.style.display = 'none';
+
+                // Load main website content
+                fetch('index.html')
+                    .then(response => response.text())
+                    .then(html => {
+                        // Extract body content
+                        const parser = new DOMParser();
+                        const doc = parser.parseFromString(html, 'text/html');
+                        const mainContent = doc.querySelector('body').innerHTML;
+
+                        const mainWebsite = document.getElementById('mainWebsite');
+                        mainWebsite.innerHTML = mainContent;
+                        mainWebsite.classList.add('visible');
+
+                        // Personalize content
+                        personalizeWebsite();
+                    })
+                    .catch(() => {
+                        // Fallback: redirect
+                        window.location.href = 'index.html';
+                    });
+            }, 500);
+        }
+
+        function personalizeWebsite() {
+            const data = JSON.parse(localStorage.getItem('quizData') || '{}');
+
+            // Update hero text based on goal
+            const heroTitle = document.querySelector('.hero-title');
+            if (heroTitle && data.goal) {
+                const messages = {
+                    'weight-loss': 'ابدأ رحلتك لخسارة الوزن اليوم! 🎯',
+                    'muscle-gain': 'ابنِ جسماً أقوى وأكثر ليونة! 💪',
+                    'weight-gain': 'اكتسب وزناً صحياً مع خطط مخصصة! 📈',
+                    'lifestyle': 'عش حياة أكثر صحة وسعادة! 🌿'
+                };
+                heroTitle.innerHTML = messages[data.goal] || heroTitle.innerHTML;
+            }
+        }
+
+        // Initialize
+        updateProgress();
+    </script>
+</body>
+
+</html>

@@ -23,6 +23,101 @@
 </head>
 
 <body>
+    <!-- Splash Screen Overlay -->
+    <div class="splash-overlay" id="splashOverlay">
+        <div class="splash-content">
+            <img src="images/logo.png" alt="Lovers Diet Center" class="splash-logo">
+            <div class="splash-loader"></div>
+            <p class="splash-text">جاري التحميل...</p>
+        </div>
+    </div>
+
+    <!-- Personalized Welcome Overlay -->
+    <div class="welcome-overlay" id="welcomeOverlay" style="display: none;">
+        <div class="welcome-content">
+            <div class="welcome-badge">🎉 أهلاً بك</div>
+            <h1 class="welcome-name" id="welcomeName">مرحباً!</h1>
+            <p class="welcome-goal-text">هدفك:</p>
+            <h2 class="welcome-goal" id="welcomeGoal">خسارة وزن</h2>
+            <div class="welcome-image-container">
+                <img src="images/goal-weight-loss.png" alt="هدفك" class="welcome-image" id="welcomeImage">
+            </div>
+            <p class="welcome-message">نحن هنا لمساعدتك في تحقيق أهدافك! 💪</p>
+            <div class="welcome-progress">
+                <div class="welcome-progress-bar" id="welcomeProgressBar"></div>
+            </div>
+            <p class="welcome-redirect-text">جاري تحويلك للموقع...</p>
+        </div>
+    </div>
+
+    <script>
+        // Check if user should see quiz first OR show welcome
+        (function () {
+            const hasCompletedQuiz = localStorage.getItem('quizCompleted');
+            const showWelcome = localStorage.getItem('showWelcome');
+            const quizDataStr = localStorage.getItem('quizData');
+
+            if (!hasCompletedQuiz) {
+                // Show splash then redirect to quiz
+                setTimeout(function () {
+                    window.location.href = 'quiz.html';
+                }, 2000);
+            } else if (showWelcome === 'true' && quizDataStr) {
+                // Show personalized welcome
+                document.getElementById('splashOverlay').style.display = 'none';
+                const welcomeOverlay = document.getElementById('welcomeOverlay');
+                welcomeOverlay.style.display = 'flex';
+
+                // Parse quiz data
+                const quizData = JSON.parse(quizDataStr);
+
+                // Goal labels
+                const goalLabels = {
+                    'weight-loss': 'خسارة وزن',
+                    'muscle-gain': 'بناء عضلات',
+                    'fitness': 'زيادة اللياقة',
+                    'health': 'تحسين الصحة'
+                };
+
+                // Goal images
+                const goalImages = {
+                    'weight-loss': 'images/goal-weight-loss.png',
+                    'muscle-gain': 'images/goal-muscle-gain.png',
+                    'fitness': 'images/goal-fitness.png',
+                    'health': 'images/goal-health.png'
+                };
+
+                // Update welcome content
+                document.getElementById('welcomeName').textContent = 'مرحباً ' + quizData.name + '!';
+                document.getElementById('welcomeGoal').textContent = goalLabels[quizData.goal] || quizData.goal;
+                document.getElementById('welcomeImage').src = goalImages[quizData.goal] || 'images/goal-weight-loss.png';
+
+                // Animate progress bar
+                let progress = 0;
+                const progressBar = document.getElementById('welcomeProgressBar');
+                const progressInterval = setInterval(function () {
+                    progress += 2;
+                    progressBar.style.width = progress + '%';
+                    if (progress >= 100) {
+                        clearInterval(progressInterval);
+                        // Hide welcome and show site
+                        setTimeout(function () {
+                            welcomeOverlay.style.opacity = '0';
+                            setTimeout(function () {
+                                welcomeOverlay.style.display = 'none';
+                                localStorage.removeItem('showWelcome');
+                            }, 500);
+                        }, 500);
+                    }
+                }, 50);
+            } else {
+                // Hide splash immediately
+                document.getElementById('splashOverlay').style.display = 'none';
+            }
+        })();
+    </script>
+
+
     <!-- ===== HEADER ===== -->
     <header class="header" id="header">
         <div class="container">
@@ -75,11 +170,11 @@
                     reach your ideal weight and glow with radiant skin.</p>
 
                 <div class="hero-buttons">
-                    <a href="#contact" class="btn btn-primary">
-                        <span>📅</span> <span data-translate="bookConsultation">Book Consultation</span>
+                    <a href="quiz.html" class="btn btn-primary quiz-cta">
+                        <span>✨</span> <span data-translate="startJourney">ابدأ رحلتك الآن</span>
                     </a>
-                    <a href="#products" class="btn btn-secondary">
-                        <span>🛒</span> <span data-translate="viewProducts">View Products</span>
+                    <a href="#contact" class="btn btn-secondary">
+                        <span>📅</span> <span data-translate="bookConsultation">Book Consultation</span>
                     </a>
                 </div>
             </div>

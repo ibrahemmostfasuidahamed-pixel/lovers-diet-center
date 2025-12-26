@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ابدأ رحلتك - لوفرز دايت سنتر</title>
+    <link rel="stylesheet" href="css/quiz.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Splash Loading Screen -->
+    <div class="splash-screen" id="splashScreen">
+        <div class="splash-content">
+            <img src="images/logo.png" alt="Lovers Diet Center" class="splash-logo">
+            <div class="splash-loader"></div>
+            <p class="splash-text">جاري تحضير خطتك...</p>
+        </div>
+    </div>
+
+    <!-- Progress Bar (hidden initially) -->
+    <div class="progress-container" id="progressContainer" style="display: none;">
+        <div class="progress-bar" id="progressBar"></div>
+        <div class="progress-text" id="progressText">1 / 7</div>
+    </div>
+
+    <!-- Quiz Container (hidden initially) -->
+    <div class="quiz-container" id="quizContainer" style="opacity: 0;">
+        <!-- Step 1: Gender -->
+        <div class="quiz-step active" data-step="1">
+            <div class="quiz-content">
+                <div class="quiz-logo">
+                    <img src="images/logo.png" alt="Lovers Diet Center">
+                </div>
+                <h1 class="quiz-title">خطة صحية مخصصة لك</h1>
+                <h2 class="quiz-question">اختر جنسك</h2>
+
+                <div class="gender-cards">
+                    <div class="gender-card" data-value="male" onclick="selectGender('male')">
+                        <img src="images/male-fitness.png" alt="رجل" class="gender-img">
+                        <h3>رجل</h3>
+                        <button class="gender-btn">اختيار</button>
+                    </div>
+                    <div class="gender-card" data-value="female" onclick="selectGender('female')">
+                        <img src="images/female-fitness.png" alt="امرأة" class="gender-img">
+                        <h3>امرأة</h3>
+                        <button class="gender-btn">اختيار</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 2: Social Proof -->
+        <div class="quiz-step" data-step="2">
+            <div class="quiz-content social-proof">
+                <div class="social-proof-icon">✨</div>
+                <h1 class="social-proof-title">أنت في أيدٍ أمينة</h1>
+                <h2 class="social-proof-subtitle">مع د. وائل محمد موسى</h2>
+
+                <div class="stats-container">
+                    <div class="stat-card">
+                        <div class="stat-number">500+</div>
+                        <div class="stat-label">حالة ناجحة</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">4.9</div>
+                        <div class="stat-label">تقييم العملاء</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">10+</div>
+                        <div class="stat-label">سنوات خبرة</div>
+                    </div>
+                </div>
+
+                <div class="credentials">
+                    <p>✅ ماجستير في علوم التغذية والغذاء</p>
+                    <p>✅ باحث دكتوراه في التغذية</p>
+                    <p>✅ عضو جمعية التغذية الإماراتية</p>
+                </div>
+
+                <button class="btn-continue" onclick="nextStep()">متابعة</button>
+            </div>
+        </div>
+
+        <!-- Step 3: Main Goal -->
+        <div class="quiz-step" data-step="3">
+            <div class="quiz-content">
+                <button class="btn-back" onclick="prevStep()">← رجوع</button>
+                <h2 class="quiz-question">ما هو هدفك الصحي الرئيسي؟</h2>
+
+                <div class="options-container">
+                    <div class="option-card" data-value="weight-loss" onclick="selectOption(this, 'goal')">
+                        <div class="option-icon">🎯</div>
+                        <h3>خسارة وزن</h3>
+                    </div>
+                    <div class="option-card" data-value="muscle-gain" onclick="selectOption(this, 'goal')">
+                        <div class="option-icon">💪</div>
+                        <h3>بناء عضلات</h3>
+                    </div>
+                    <div class="option-card" data-value="fitness" onclick="selectOption(this, 'goal')">
+                        <div class="option-icon">🏃</div>
+                        <h3>زيادة اللياقة</h3>
+                    </div>
+                    <div class="option-card" data-value="health" onclick="selectOption(this, 'goal')">
+                        <div class="option-icon">🩺</div>
+                        <h3>تحسين الصحة العامة</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 4: Additional Goals (Multi-select) -->
+        <div class="quiz-step" data-step="4">
+            <div class="quiz-content">
+                <button class="btn-back" onclick="prevStep()">← رجوع</button>
+                <h2 class="quiz-question">هل لديك أهداف إضافية؟</h2>
+                <p class="quiz-subtitle">يمكنك اختيار أكثر من هدف</p>
+
+                <div class="options-container multi-select">
+                    <div class="option-card multi" data-value="skin">
+                        <div class="option-icon">✨</div>
+                        <h3>تحسين البشرة</h3>
+                        <div class="checkbox"></div>
+                    </div>
+                    <div class="option-card multi" data-value="sleep">
+                        <div class="option-icon">😴</div>
+                        <h3>نوم أفضل</h3>
+                        <div class="checkbox"></div>
+                    </div>
+                    <div class="option-card multi" data-value="stress">
+                        <div class="option-icon">🧘</div>
+                        <h3>تقليل التوتر</h3>
+                        <div class="checkbox"></div>
+                    </div>
+                    <div class="option-card multi" data-value="habits">
+                        <div class="option-icon">🍽️</div>
+                        <h3>عادات أكل صحية</h3>
+                        <div class="checkbox"></div>
+                    </div>
+                </div>
+
+                <button class="btn-continue disabled" id="multiSelectBtn" onclick="nextStep()">متابعة</button>
+            </div>
+        </div>
+
+        <!-- Step 5: Age -->
+        <div class="quiz-step" data-step="5">
+            <div class="quiz-content">
+                <button class="btn-back" onclick="prevStep()">← رجوع</button>
+                <h2 class="quiz-question">ما هي فئتك العمرية؟</h2>
+
+                <div class="options-container">
+                    <div class="option-card" data-value="18-25" onclick="selectOption(this, 'age')">
+                        <h3>18-25 سنة</h3>
+                    </div>
+                    <div class="option-card" data-value="26-35" onclick="selectOption(this, 'age')">
+                        <h3>26-35 سنة</h3>
+                    </div>
+                    <div class="option-card" data-value="36-45" onclick="selectOption(this, 'age')">
+                        <h3>36-45 سنة</h3>
+                    </div>
+                    <div class="option-card" data-value="46-55" onclick="selectOption(this, 'age')">
+                        <h3>46-55 سنة</h3>
+                    </div>
+                    <div class="option-card" data-value="56+" onclick="selectOption(this, 'age')">
+                        <h3>56+ سنة</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 6: Activity Level -->
+        <div class="quiz-step" data-step="6">
+            <div class="quiz-content">
+                <button class="btn-back" onclick="prevStep()">← رجوع</button>
+                <h2 class="quiz-question">ما هو مستوى نشاطك اليومي؟</h2>
+
+                <div class="options-container">
+                    <div class="option-card" data-value="sedentary" onclick="selectOption(this, 'activity')">
+                        <div class="option-icon">🛋️</div>
+                        <h3>قليل جداً</h3>
+                        <p>جلوس معظم اليوم</p>
+                    </div>
+                    <div class="option-card" data-value="light" onclick="selectOption(this, 'activity')">
+                        <div class="option-icon">🚶</div>
+                        <h3>خفيف</h3>
+                        <p>مشي خفيف يومياً</p>
+                    </div>
+                    <div class="option-card" data-value="moderate" onclick="selectOption(this, 'activity')">
+                        <div class="option-icon">🏃</div>
+                        <h3>متوسط</h3>
+                        <p>رياضة 3-4 أيام</p>
+                    </div>
+                    <div class="option-card" data-value="high" onclick="selectOption(this, 'activity')">
+                        <div class="option-icon">💪</div>
+                        <h3>عالي</h3>
+                        <p>رياضة يومية</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 7: Contact Info -->
+        <div class="quiz-step" data-step="7">
+            <div class="quiz-content">
+                <button class="btn-back" onclick="prevStep()">← رجوع</button>
+                <h2 class="quiz-question">آخر خطوة! 🎉</h2>
+                <p class="quiz-subtitle">أدخل بياناتك لنرسل لك خطتك المخصصة</p>
+
+                <form class="contact-form" onsubmit="submitQuiz(event)">
+                    <div class="form-group">
+                        <label for="name">الاسم الكامل *</label>
+                        <input type="text" id="name" required placeholder="أدخل اسمك">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone">رقم الواتساب *</label>
+                        <input type="tel" id="phone" required placeholder="05xxxxxxxx">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">البريد الإلكتروني (اختياري)</label>
+                        <input type="email" id="email" placeholder="example@email.com">
+                    </div>
+
+                    <button type="submit" class="btn-submit">احصل على خطتك المجانية 🎁</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="js/quiz.js"></script>
+</body>
+
+</html>
