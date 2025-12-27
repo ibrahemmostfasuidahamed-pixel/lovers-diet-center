@@ -3,7 +3,18 @@ document.addEventListener('DOMContentLoaded', function () {
   const loadingScreen = document.getElementById('screen-loading');
   const mainContent = document.getElementById('mainContent');
 
-  // Simulate loading progress
+  // Check if user completed quiz
+  const quizCompleted = localStorage.getItem('loverSDC_userData');
+
+  if (!quizCompleted) {
+    // First visit - redirect to quiz after 2 seconds
+    setTimeout(function () {
+      window.location.href = 'quiz.html';
+    }, 2000);
+    return;
+  }
+
+  // Quiz completed - show main site
   const progressFill = document.querySelector('.progress-fill');
   let progress = 0;
 

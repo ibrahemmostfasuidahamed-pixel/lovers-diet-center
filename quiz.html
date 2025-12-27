@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Lovers Diet Center - Your Health Journey">
+    <title>ابدأ رحلتك - Lovers Diet Center</title>
+    <link rel="stylesheet" href="css/clinic.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="images/logo.png">
+</head>
+
+<body>
+
+    <!-- Language & Theme Toggles -->
+    <div class="controls">
+        <button id="langToggle" class="control-btn" aria-label="Toggle Language">
+            <span class="en-text">AR</span>
+            <span class="ar-text">EN</span>
+        </button>
+        <button id="themeToggle" class="control-btn" aria-label="Toggle Theme">
+            <span class="theme-icon">🌙</span>
+        </button>
+    </div>
+
+    <!-- Screen 1: Loading -->
+    <section id="screen-loading" class="screen active">
+        <div class="loading-container">
+            <div class="logo-container">
+                <div class="logo-placeholder">
+                    <h1 class="logo-text">LOVER SDC</h1>
+                </div>
+            </div>
+            <p class="slogan" data-en="Together towards a better life" data-ar="معًا نحو حياة أفضل">معًا نحو حياة أفضل
+            </p>
+            <div class="loader">
+                <div class="loader-circle"></div>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Screen 2: Gender Selection -->
+    <section id="screen-gender" class="screen">
+        <div class="container">
+            <h2 class="screen-title" data-en="Start Your Journey Now" data-ar="ابدأ رحلتك الآن">ابدأ رحلتك الآن</h2>
+            <div class="gender-cards">
+                <div class="gender-card" data-gender="male">
+                    <div class="card-icon">🧔</div>
+                    <h3 data-en="Male" data-ar="رجل">رجل</h3>
+                </div>
+                <div class="gender-card" data-gender="female">
+                    <div class="card-icon">👩</div>
+                    <h3 data-en="Female" data-ar="امرأة">امرأة</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Screen 3: Motivational Quote -->
+    <section id="screen-motivation" class="screen">
+        <div class="motivation-container">
+            <div class="motivation-image male-image">
+                <div class="image-placeholder male-placeholder"></div>
+            </div>
+            <div class="motivation-image female-image">
+                <div class="image-placeholder female-placeholder"></div>
+            </div>
+            <div class="motivation-text">
+                <p class="quote male-quote" data-en="True strength begins when you decide to change"
+                    data-ar="القوة الحقيقية تبدأ عندما تقرر أن تغيّر">القوة الحقيقية تبدأ عندما تقرر أن تغيّر</p>
+                <p class="quote female-quote"
+                    data-en="You are stronger than you think, and your beauty starts with your health"
+                    data-ar="أنتِ أقوى مما تعتقدين، وجمالك يبدأ من صحتك">أنتِ أقوى مما تعتقدين، وجمالك يبدأ من صحتك</p>
+            </div>
+            <button class="btn btn-primary continue-btn" data-en="Continue" data-ar="متابعة">متابعة</button>
+        </div>
+    </section>
+
+    <!-- Screen 4: Height Input -->
+    <section id="screen-height" class="screen">
+        <div class="container">
+            <div class="question-container">
+                <h2 class="question-title" data-en="What is your height?" data-ar="ما هو طولك؟">ما هو طولك؟</h2>
+                <div class="input-group">
+                    <input type="number" id="height" class="input-field" min="100" max="250" required>
+                    <span class="input-unit">cm</span>
+                </div>
+                <p class="input-hint" data-en="Enter your height in centimeters (100-250)"
+                    data-ar="أدخل طولك بالسنتيمتر (100-250)">أدخل طولك بالسنتيمتر (100-250)</p>
+                <button class="btn btn-primary" onclick="saveAndNext('height', 'screen-weight')" data-en="Next"
+                    data-ar="التالي">التالي</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Screen 5: Weight Input -->
+    <section id="screen-weight" class="screen">
+        <div class="container">
+            <div class="question-container">
+                <h2 class="question-title" data-en="What is your current weight?" data-ar="ما هو وزنك الحالي؟">ما هو
+                    وزنك الحالي؟</h2>
+                <div class="input-group">
+                    <input type="number" id="weight" class="input-field" min="30" max="300" required>
+                    <span class="input-unit">kg</span>
+                </div>
+                <p class="input-hint" data-en="Enter your weight in kilograms (30-300)"
+                    data-ar="أدخل وزنك بالكيلوغرام (30-300)">أدخل وزنك بالكيلوغرام (30-300)</p>
+                <button class="btn btn-primary" onclick="saveAndNext('weight', 'screen-age')" data-en="Next"
+                    data-ar="التالي">التالي</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Screen 6: Age Input -->
+    <section id="screen-age" class="screen">
+        <div class="container">
+            <div class="question-container">
+                <h2 class="question-title" data-en="What is your age?" data-ar="ما هو عمرك؟">ما هو عمرك؟</h2>
+                <div class="input-group">
+                    <input type="number" id="age" class="input-field" min="10" max="100" required>
+                    <span class="input-unit" data-en="years" data-ar="سنة">سنة</span>
+                </div>
+                <p class="input-hint" data-en="Enter your age (10-100)" data-ar="أدخل عمرك (10-100)">أدخل عمرك (10-100)
+                </p>
+                <button class="btn btn-primary" onclick="saveAndNext('age', 'screen-target')" data-en="Next"
+                    data-ar="التالي">التالي</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Screen 7: Target Weight -->
+    <section id="screen-target" class="screen">
+        <div class="container">
+            <div class="question-container">
+                <h2 class="question-title" data-en="What is your target weight?" data-ar="ما هو وزنك المستهدف؟">ما هو
+                    وزنك المستهدف؟</h2>
+                <div class="input-group">
+                    <input type="number" id="targetWeight" class="input-field" min="30" max="300" required>
+                    <span class="input-unit">kg</span>
+                </div>
+                <div class="weight-graph">
+                    <canvas id="weightChart"></canvas>
+                    <div class="weight-stats">
+                        <div class="stat-item">
+                            <span class="stat-label" data-en="Current Weight" data-ar="الوزن الحالي">الوزن الحالي</span>
+                            <span class="stat-value" id="currentWeightDisplay">--</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label" data-en="Target Weight" data-ar="الوزن المستهدف">الوزن
+                                المستهدف</span>
+                            <span class="stat-value" id="targetWeightDisplay">--</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label" data-en="Difference" data-ar="الفرق">الفرق</span>
+                            <span class="stat-value" id="differencDisplay">--</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label" data-en="Estimated Duration" data-ar="المدة المتوقعة">المدة
+                                المتوقعة</span>
+                            <span class="stat-value" id="durationDisplay">--</span>
+                        </div>
+                    </div>
+                </div>
+                <button class="btn btn-primary" onclick="saveAndNext('targetWeight', 'screen-lifestyle')" data-en="Next"
+                    data-ar="التالي">التالي</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Screen 8: Lifestyle -->
+    <section id="screen-lifestyle" class="screen">
+        <div class="container">
+            <h2 class="screen-title" data-en="How do you typically spend your day?" data-ar="كيف تقضي يومك عادةً؟">كيف
+                تقضي يومك عادةً؟</h2>
+            <div class="lifestyle-cards">
+                <div class="lifestyle-card" data-lifestyle="sedentary">
+                    <div class="lifestyle-icon">🪑</div>
+                    <h3 data-en="Mostly Sitting" data-ar="جلوس معظم الوقت">جلوس معظم الوقت</h3>
+                    <p data-en="Office work, little movement" data-ar="عمل مكتبي، حركة قليلة">عمل مكتبي، حركة قليلة</p>
+                </div>
+                <div class="lifestyle-card" data-lifestyle="light">
+                    <div class="lifestyle-icon">🚶</div>
+                    <h3 data-en="Light Activity" data-ar="نشاط خفيف">نشاط خفيف</h3>
+                    <p data-en="Walking, light tasks" data-ar="مشي، مهام خفيفة">مشي، مهام خفيفة</p>
+                </div>
+                <div class="lifestyle-card" data-lifestyle="moderate">
+                    <div class="lifestyle-icon">🏃</div>
+                    <h3 data-en="Moderately Active" data-ar="نشاط متوسط">نشاط متوسط</h3>
+                    <p data-en="Regular exercise, active job" data-ar="رياضة منتظمة، عمل نشط">رياضة منتظمة، عمل نشط</p>
+                </div>
+                <div class="lifestyle-card" data-lifestyle="very-active">
+                    <div class="lifestyle-icon">🏋️</div>
+                    <h3 data-en="Very Active" data-ar="نشاط عالي جداً">نشاط عالي جداً</h3>
+                    <p data-en="Intense training, physical job" data-ar="تمارين مكثفة، عمل بدني">تمارين مكثفة، عمل بدني
+                    </p>
+                </div>
+            </div>
+            <div class="other-input">
+                <input type="text" id="lifestyleOther" class="input-field" placeholder="أو اكتب وصفاً آخر...">
+            </div>
+        </div>
+    </section>
+
+    <!-- Screen 9: Discomfort -->
+    <section id="screen-discomfort" class="screen">
+        <div class="container">
+            <h2 class="screen-title" data-en="Do you experience too much discomfort during the day?"
+                data-ar="هل تعاني من آلام خلال اليوم؟">هل تعاني من آلام خلال اليوم؟</h2>
+            <div class="option-cards">
+                <div class="option-card" data-discomfort="yes">
+                    <div class="option-icon">😣</div>
+                    <h3 data-en="Yes" data-ar="نعم">نعم</h3>
+                </div>
+                <div class="option-card" data-discomfort="no">
+                    <div class="option-icon">😊</div>
+                    <h3 data-en="No" data-ar="لا">لا</h3>
+                </div>
+                <div class="option-card" data-discomfort="unsure">
+                    <div class="option-icon">🤔</div>
+                    <h3 data-en="I'm not sure" data-ar="لست متأكداً">لست متأكداً</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Screen 10: Daily Habits -->
+    <section id="screen-habits" class="screen">
+        <div class="container">
+            <h2 class="screen-title" data-en="Your Daily Habits" data-ar="عاداتك اليومية">عاداتك اليومية</h2>
+
+            <div class="habit-question">
+                <h3 data-en="How many meals do you eat per day?" data-ar="كم وجبة تتناول يومياً؟">كم وجبة تتناول يومياً؟
+                </h3>
+                <div class="slider-container">
+                    <input type="range" id="meals" min="1" max="6" value="3" class="slider">
+                    <span class="slider-value" id="mealsValue">3</span>
+                </div>
+            </div>
+
+            <div class="habit-question">
+                <h3 data-en="Do you workout?" data-ar="هل تمارس الرياضة؟">هل تمارس الرياضة؟</h3>
+                <div class="toggle-group">
+                    <button class="toggle-btn" data-workout="yes" data-en="Yes" data-ar="نعم">نعم</button>
+                    <button class="toggle-btn" data-workout="sometimes" data-en="Sometimes"
+                        data-ar="أحياناً">أحياناً</button>
+                    <button class="toggle-btn" data-workout="no" data-en="No" data-ar="لا">لا</button>
+                </div>
+            </div>
+
+            <div class="habit-question">
+                <h3 data-en="How much do you usually sleep?" data-ar="كم ساعة تنام عادة؟">كم ساعة تنام عادة؟</h3>
+                <div class="slider-container">
+                    <input type="range" id="sleep" min="3" max="12" value="7" step="0.5" class="slider">
+                    <span class="slider-value" id="sleepValue">7</span>
+                    <span data-en="hours" data-ar="ساعة">ساعة</span>
+                </div>
+            </div>
+
+            <div class="habit-question">
+                <h3 data-en="How much water do you drink daily?" data-ar="كم لتر ماء تشرب يومياً؟">كم لتر ماء تشرب
+                    يومياً؟</h3>
+                <div class="slider-container">
+                    <input type="range" id="water" min="0" max="5" value="2" step="0.5" class="slider">
+                    <span class="slider-value" id="waterValue">2</span>
+                    <span data-en="liters" data-ar="لتر">لتر</span>
+                </div>
+            </div>
+
+            <button class="btn btn-primary" onclick="navigateToScreen('screen-food')" data-en="Next"
+                data-ar="التالي">التالي</button>
+        </div>
+    </section>
+
+    <!-- Screen 11: Food Preferences -->
+    <section id="screen-food" class="screen">
+        <div class="container">
+            <h2 class="screen-title" data-en="Food Preferences" data-ar="تفضيلاتك الغذائية">تفضيلاتك الغذائية</h2>
+            <p class="subtitle" data-en="Select your favorite food categories"
+                data-ar="اختر الفئات الغذائية المفضلة لديك">اختر الفئات الغذائية المفضلة لديك</p>
+
+            <div class="food-grid">
+                <div class="food-card" data-food="meat">
+                    <div class="food-icon">🥩</div>
+                    <h3 data-en="Meat" data-ar="اللحوم">اللحوم</h3>
+                    <div class="checkbox-indicator"></div>
+                </div>
+                <div class="food-card" data-food="vegetables">
+                    <div class="food-icon">🥦</div>
+                    <h3 data-en="Vegetables" data-ar="الخضروات">الخضروات</h3>
+                    <div class="checkbox-indicator"></div>
+                </div>
+                <div class="food-card" data-food="fruits">
+                    <div class="food-icon">🍎</div>
+                    <h3 data-en="Fruits" data-ar="الفواكه">الفواكه</h3>
+                    <div class="checkbox-indicator"></div>
+                </div>
+                <div class="food-card" data-food="carbs">
+                    <div class="food-icon">🍞</div>
+                    <h3 data-en="Carbohydrates" data-ar="الكربوهيدرات">الكربوهيدرات</h3>
+                    <div class="checkbox-indicator"></div>
+                </div>
+                <div class="food-card" data-food="dairy">
+                    <div class="food-icon">🥛</div>
+                    <h3 data-en="Dairy" data-ar="منتجات الألبان">منتجات الألبان</h3>
+                    <div class="checkbox-indicator"></div>
+                </div>
+                <div class="food-card" data-food="fish">
+                    <div class="food-icon">🐟</div>
+                    <h3 data-en="Fish" data-ar="الأسماك">الأسماك</h3>
+                    <div class="checkbox-indicator"></div>
+                </div>
+            </div>
+
+            <div class="additional-info">
+                <label data-en="Additional dietary notes:" data-ar="ملاحظات غذائية إضافية:">ملاحظات غذائية
+                    إضافية:</label>
+                <textarea id="foodNotes" class="textarea-field" rows="3"
+                    placeholder="حساسية من أطعمة معينة، نظام نباتي، إلخ..."></textarea>
+            </div>
+
+            <button class="btn btn-primary" onclick="navigateToScreen('screen-team')" data-en="Next"
+                data-ar="التالي">التالي</button>
+        </div>
+    </section>
+
+    <!-- Screen 12: Team -->
+    <section id="screen-team" class="screen">
+        <div class="container">
+            <h2 class="screen-title" data-en="Experts who will be with you on your journey"
+                data-ar="الخبراء اللي هيكونوا معاك في الرحلة">الخبراء اللي هيكونوا معاك في الرحلة</h2>
+
+            <div class="team-grid">
+                <div class="team-card">
+                    <div class="team-image">
+                        <div class="image-placeholder team-placeholder"></div>
+                    </div>
+                    <h3 data-en="Dr. Ahmed Hassan" data-ar="د. أحمد حسن">د. أحمد حسن</h3>
+                    <p class="team-role" data-en="Nutrition Specialist" data-ar="أخصائي تغذية">أخصائي تغذية</p>
+                    <p class="team-desc" data-en="15 years of experience in clinical nutrition"
+                        data-ar="15 سنة خبرة في التغذية العلاجية">15 سنة خبرة في التغذية العلاجية</p>
+                </div>
+
+                <div class="team-card">
+                    <div class="team-image">
+                        <div class="image-placeholder team-placeholder"></div>
+                    </div>
+                    <h3 data-en="Sarah Mohamed" data-ar="سارة محمد">سارة محمد</h3>
+                    <p class="team-role" data-en="Fitness Coach" data-ar="مدربة لياقة بدنية">مدربة لياقة بدنية</p>
+                    <p class="team-desc" data-en="Certified personal trainer, weight loss expert"
+                        data-ar="مدربة معتمدة، خبيرة تخسيس">مدربة معتمدة، خبيرة تخسيس</p>
+                </div>
+
+                <div class="team-card">
+                    <div class="team-image">
+                        <div class="image-placeholder team-placeholder"></div>
+                    </div>
+                    <h3 data-en="Dr. Laila Karim" data-ar="د. ليلى كريم">د. ليلى كريم</h3>
+                    <p class="team-role" data-en="Health Consultant" data-ar="استشارية صحة">استشارية صحة</p>
+                    <p class="team-desc" data-en="Holistic health and wellness specialist"
+                        data-ar="متخصصة في الصحة الشاملة">متخصصة في الصحة الشاملة</p>
+                </div>
+            </div>
+
+            <button class="btn btn-primary" onclick="navigateToScreen('screen-event')" data-en="Next"
+                data-ar="التالي">التالي</button>
+        </div>
+    </section>
+
+    <!-- Screen 13: Event -->
+    <section id="screen-event" class="screen">
+        <div class="container">
+            <div class="question-container">
+                <h2 class="question-title" data-en="Do you have an upcoming event you want to prepare for?"
+                    data-ar="هل توجد مناسبة تود الاستعداد لها؟">هل توجد مناسبة تود الاستعداد لها؟</h2>
+
+                <div class="option-cards">
+                    <div class="option-card" data-event="yes">
+                        <div class="option-icon">🎉</div>
+                        <h3 data-en="Yes" data-ar="نعم">نعم</h3>
+                    </div>
+                    <div class="option-card" data-event="no">
+                        <div class="option-icon">🚫</div>
+                        <h3 data-en="No" data-ar="لا">لا</h3>
+                    </div>
+                </div>
+
+                <div id="eventDetails" class="event-details hidden">
+                    <div class="input-group">
+                        <label data-en="Event name:" data-ar="اسم المناسبة:">اسم المناسبة:</label>
+                        <input type="text" id="eventName" class="input-field" placeholder="مثال: حفل زفاف، تخرج...">
+                    </div>
+                    <div class="input-group">
+                        <label data-en="Event date:" data-ar="موعد المناسبة:">موعد المناسبة:</label>
+                        <input type="date" id="eventDate" class="input-field">
+                    </div>
+                </div>
+
+                <button class="btn btn-primary" onclick="goToMainSite()" data-en="Complete" data-ar="إكمال"
+                    \u003eإكمال\u003c/button\u003e \u003c/div\u003e \u003c/div\u003e \u003c/section\u003e <!-- Screen
+                    14: Final Results -->
+                    <section id="screen-results" class="screen">
+                        <div class="results-container">
+                            <h2 class="results-title" data-en="Your Health Analysis" data-ar="تحليلك الصحي">تحليلك الصحي
+                            </h2>
+
+                            <div class="results-split">
+                                <!-- Avatar Side -->
+                                <div class="results-avatar">
+                                    <div class="avatar-container">
+                                        <!-- Floating Data Bubbles (Desktop Only) -->
+                                        <div class="floating-bubble top-left desktop-only">
+                                            <div class="bubble-icon">📏</div>
+                                            <span class="bubble-label" data-en="Height" data-ar="الطول">الطول</span>
+                                            <span class="bubble-value" id="bubbleHeight">--</span>
+                                        </div>
+
+                                        <div class="floating-bubble top-right desktop-only">
+                                            <div class="bubble-icon">🎂</div>
+                                            <span class="bubble-label" data-en="Age" data-ar="العمر">العمر</span>
+                                            <span class="bubble-value" id="bubbleAge">--</span>
+                                        </div>
+
+                                        <div class="floating-bubble middle-left desktop-only">
+                                            <div class="bubble-icon">⚖️</div>
+                                            <span class="bubble-label" data-en="Current" data-ar="الحالي">الحالي</span>
+                                            <span class="bubble-value" id="bubbleWeight">--</span>
+                                        </div>
+
+                                        <div class="floating-bubble middle-right desktop-only">
+                                            <div class="bubble-icon">🎯</div>
+                                            <span class="bubble-label" data-en="Target" data-ar="الهدف">الهدف</span>
+                                            <span class="bubble-value" id="bubbleTarget">--</span>
+                                        </div>
+
+                                        <div class="floating-bubble bottom-center desktop-only">
+                                            <div class="bubble-icon">⏱️</div>
+                                            <span class="bubble-label" data-en="Duration" data-ar="المدة">المدة</span>
+                                            <span class="bubble-value" id="bubbleDuration">--</span>
+                                        </div>
+
+                                        <div id="bodyAvatar" class="body-avatar"></div>
+                                    </div>
+                                    <div class="bmi-display">
+                                        <span class="bmi-label">BMI:</span>
+                                        <span class="bmi-value" id="bmiValue">--</span>
+                                        <span class="bmi-category" id="bmiCategory">--</span>
+                                    </div>
+                                </div>
+
+                                <!-- Analysis Side -->
+                                <div class="results-analysis">
+                                    <!-- Summary -->
+                                    <div class="analysis-section">
+                                        <h3 data-en="Summary" data-ar="الملخص">الملخص</h3>
+                                        <div class="summary-grid">
+                                            <div class="summary-item">
+                                                <span class="summary-label" data-en="Gender:"
+                                                    data-ar="النوع:">النوع:</span>
+                                                <span class="summary-value" id="summaryGender">--</span>
+                                            </div>
+                                            <div class="summary-item">
+                                                <span class="summary-label" data-en="Age:"
+                                                    data-ar="العمر:">العمر:</span>
+                                                <span class="summary-value" id="summaryAge">--</span>
+                                            </div>
+                                            <div class="summary-item">
+                                                <span class="summary-label" data-en="Height:"
+                                                    data-ar="الطول:">الطول:</span>
+                                                <span class="summary-value" id="summaryHeight">--</span>
+                                            </div>
+                                            <div class="summary-item">
+                                                <span class="summary-label" data-en="Current Weight:"
+                                                    data-ar="الوزن الحالي:">الوزن
+                                                    الحالي:</span>
+                                                <span class="summary-value" id="summaryWeight">--</span>
+                                            </div>
+                                            <div class="summary-item">
+                                                <span class="summary-label" data-en="Target Weight:"
+                                                    data-ar="الوزن المستهدف:">الوزن
+                                                    المستهدف:</span>
+                                                <span class="summary-value" id="summaryTarget">--</span>
+                                            </div>
+                                            <div class="summary-item">
+                                                <span class="summary-label" data-en="To Lose:"
+                                                    data-ar="للخسارة:">للخسارة:</span>
+                                                <span class="summary-value highlight" id="summaryToLose">--</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Current Habits Issues -->
+                                    <div class="analysis-section">
+                                        <h3 data-en="Areas for Improvement" data-ar="نقاط تحتاج تحسين">نقاط تحتاج تحسين
+                                        </h3>
+                                        <ul class="issues-list" id="issuesList">
+                                            <!-- Populated by JavaScript -->
+                                        </ul>
+                                    </div>
+
+                                    <!-- Recommendations -->
+                                    <div class="analysis-section">
+                                        <h3 data-en="Recommendations" data-ar="التوصيات">التوصيات</h3>
+                                        <div class="recommendations" id="recommendations">
+                                            <!-- Populated by JavaScript -->
+                                        </div>
+                                    </div>
+
+                                    <!-- Timeline -->
+                                    <div class="analysis-section">
+                                        <h3 data-en="Your Journey Timeline" data-ar="مسار رحلتك">مسار رحلتك</h3>
+                                        <div class="timeline">
+                                            <div class="timeline-item">
+                                                <div class="timeline-icon">📅</div>
+                                                <div class="timeline-content">
+                                                    <h4 data-en="Expected Duration" data-ar="المدة المتوقعة">المدة
+                                                        المتوقعة</h4>
+                                                    <p id="timelineDuration">--</p>
+                                                </div>
+                                            </div>
+                                            <div class="timeline-item">
+                                                <div class="timeline-icon">⚖️</div>
+                                                <div class="timeline-content">
+                                                    <h4 data-en="Healthy Weight Loss Rate" data-ar="معدل النزول الصحي">
+                                                        معدل النزول الصحي
+                                                    </h4>
+                                                    <p>0.5 - 1 kg <span data-en="per week"
+                                                            data-ar="أسبوعياً">أسبوعياً</span></p>
+                                                </div>
+                                            </div>
+                                            <div class="timeline-item" id="eventTimeline" class="hidden">
+                                                <div class="timeline-icon">🎉</div>
+                                                <div class="timeline-content">
+                                                    <h4 data-en="Event Goal" data-ar="هدف المناسبة">هدف المناسبة</h4>
+                                                    <p id="eventTimelineText">--</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Call to Action -->
+                                    <div class="cta-section">
+                                        <button class="btn btn-cta" data-en="Start Your Transformation"
+                                            data-ar="ابدأ رحلة التحول">ابدأ
+                                            رحلة التحول</button>
+                                        <button class="btn btn-secondary" onclick="location.reload()"
+                                            data-en="Start Over" data-ar="ابدأ من جديد">ابدأ من جديد</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Mobile Bottom Navigation -->
+                    <nav class="bottom-nav mobile-only">
+                        <div class="bottom-nav-items">
+                            <a href="#" class="bottom-nav-item active">
+                                <span class="nav-icon">🏠</span>
+                                <span data-en="Home" data-ar="الرئيسية">الرئيسية</span>
+                            </a>
+                            <a href="#" class="bottom-nav-item">
+                                <span class="nav-icon">📊</span>
+                                <span data-en="Stats" data-ar="الإحصائيات">الإحصائيات</span>
+                            </a>
+                            <a href="#" class="bottom-nav-item">
+                                <span class="nav-icon">📦</span>
+                                <span data-en="Plans" data-ar="الباقات">الباقات</span>
+                            </a>
+                            <a href="#" class="bottom-nav-item">
+                                <span class="nav-icon">👤</span>
+                                <span data-en="Profile" data-ar="الملف">الملف</span>
+                            </a>
+                        </div>
+                    </nav>
+
+                    <script src="js/clinic-full.js"></script><script src="js/quiz-redirect.js"></script>
+</body>
+
+</html>
