@@ -79,14 +79,14 @@ body {
     min-height: 100vh;
 }
 
-/* ===== SPLASH OVERLAY ===== */
+/* ===== ENHANCED SPLASH OVERLAY ===== */
 .splash-overlay {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background: #ffffff;
+    background: linear-gradient(135deg, #FDBA74 0%, #F59E0B 50%, #FDBA74 100%);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -102,23 +102,25 @@ body {
     height: 150px;
     object-fit: contain;
     animation: pulse-splash 2s ease-in-out infinite;
+    filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.2));
 }
 
 .splash-overlay .splash-loader {
     width: 50px;
     height: 50px;
     margin: 30px auto;
-    border: 4px solid #e5e7eb;
-    border-top-color: var(--primary-orange);
+    border: 4px solid rgba(255, 255, 255, 0.3);
+    border-top-color: #ffffff;
     border-radius: 50%;
     animation: spin-splash 1s linear infinite;
 }
 
 .splash-overlay .splash-text {
     font-size: 18px;
-    color: #6b7280;
+    color: #ffffff;
     font-weight: 600;
     font-family: 'Cairo', sans-serif;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
 }
 
 @keyframes pulse-splash {
@@ -400,26 +402,7 @@ p {
     transform: translateY(-3px);
 }
 
-/* Quiz CTA Special Styling */
-.quiz-cta {
-    position: relative;
-    animation: pulse-glow 2s ease-in-out infinite;
-}
-
-.quiz-cta::before {
-    content: '🎁';
-    position: absolute;
-    top: -10px;
-    right: -10px;
-    font-size: 20px;
-    animation: bounce 1.5s ease-in-out infinite;
-}
-
-[dir="rtl"] .quiz-cta::before {
-    right: auto;
-    left: -10px;
-}
-
+/* Enhanced Button Animations */
 @keyframes pulse-glow {
 
     0%,
@@ -495,8 +478,10 @@ p {
 
 .logo-text {
     font-size: 1.25rem;
-    font-weight: 700;
-    color: var(--dark-brown);
+    font-weight: 800;
+    color: #1f2937;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    letter-spacing: -0.02em;
 }
 
 .nav {
@@ -748,6 +733,10 @@ p {
     opacity: 0;
 }
 
+.hero-buttons .btn {
+    min-width: 200px;
+}
+
 [dir="rtl"] .hero-buttons {
     justify-content: flex-end;
 }
@@ -776,7 +765,7 @@ p {
     align-items: center;
     justify-content: center;
     color: white;
-    font-size: 1.8rem;
+    font-size: 1.5rem;
     text-decoration: none;
     box-shadow: 0 10px 30px rgba(37, 211, 102, 0.4);
     z-index: 999;
@@ -993,14 +982,21 @@ p {
 }
 
 .about-feature-icon {
-    width: 50px;
-    height: 50px;
+    width: 60px;
+    height: 60px;
     background: var(--gradient-orange);
-    border-radius: var(--radius-full);
+    border-radius: var(--radius-md);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.25rem;
+    font-size: 1.5rem;
+    color: white;
+    box-shadow: 0 10px 25px rgba(245, 158, 11, 0.3);
+    transition: var(--transition-fast);
+}
+
+.about-feature-icon i {
+    font-size: 1.5rem;
 }
 
 .about-feature-text {
@@ -1064,6 +1060,10 @@ p {
     font-size: 2rem;
     color: var(--text-light);
     box-shadow: 0 15px 35px rgba(245, 158, 11, 0.3);
+}
+
+.service-icon i {
+    font-size: 2rem;
 }
 
 .service-card h3 {
@@ -1415,6 +1415,10 @@ p {
     font-size: 1.25rem;
     color: var(--text-light);
     flex-shrink: 0;
+}
+
+.contact-icon i {
+    font-size: 1.25rem;
 }
 
 .contact-text h4 {
