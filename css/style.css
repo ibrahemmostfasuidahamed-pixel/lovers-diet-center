@@ -569,6 +569,8 @@ p {
 /* ===== HERO SECTION - SPLIT LAYOUT ===== */
 .hero {
     min-height: 100vh;
+    min-height: 100dvh;
+    /* Mobile Optimized */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1781,6 +1783,8 @@ p {
     .btn {
         padding: 12px 25px;
         font-size: 0.9rem;
+        min-height: 48px;
+        /* Touch target */
     }
 
     .glass-card {
@@ -1789,6 +1793,17 @@ p {
 
     .contact-form-container {
         padding: 25px;
+    }
+
+    /* Improved Touch Targets */
+    .footer-links a {
+        display: block;
+        padding: 10px 0;
+    }
+
+    .footer-social a {
+        width: 50px;
+        height: 50px;
     }
 }
 
@@ -1980,6 +1995,8 @@ p {
     margin: 0;
     font-size: 0.9rem;
 }
+
+
 
 /* Admin Products */
 .admin-section {
